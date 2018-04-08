@@ -13,7 +13,11 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import load_model
 from operator import itemgetter
+<<<<<<< HEAD
 from flask_restful import Resource,reqparse,Api
+=======
+from flask_restful import Resource,reqparse,Api 
+>>>>>>> ae8b8ce0215ad37cb4fb48ce9ec4e4c58a66fae5
 from sklearn.preprocessing import LabelEncoder
 from collections import defaultdict
 
@@ -52,7 +56,11 @@ def GetDetails(clg):
   data=cursor.fetchall()
   print(data)
   print(list(data))
+<<<<<<< HEAD
   return list(data)
+=======
+  return list(data)     
+>>>>>>> ae8b8ce0215ad37cb4fb48ce9ec4e4c58a66fae5
 def predict(X_train, y_train, x_test, k):
     # create list for distances and targets
       distances = []
@@ -231,14 +239,22 @@ def Get_Colleges():
     lang=int(float(lang))
 
     userInput=((gre*100/340)+gpa+lang)/3
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> ae8b8ce0215ad37cb4fb48ce9ec4e4c58a66fae5
 
 
     df = pd.read_csv("gredatasetmain.csv")
     X=df.iloc[:,[1,2,3]]
     labels=df.iloc[:,[0]]
 
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> ae8b8ce0215ad37cb4fb48ce9ec4e4c58a66fae5
     le_X=LabelEncoder()
     labels.values[:,0]=le_X.fit_transform(labels.values[:,0])
 
@@ -275,7 +291,11 @@ def Get_Colleges():
       print(lk)
       mainList.append(lk);
     #print("mainList"+mainList)
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> ae8b8ce0215ad37cb4fb48ce9ec4e4c58a66fae5
 
     i=labels.index[labels['name'] == perfect].tolist()
     print(i)
@@ -289,7 +309,11 @@ def Get_Colleges():
       if i[0][4]>mainPerfect[0][4]:
         highList.append(i[0])
       else:
+<<<<<<< HEAD
         lowList.append(i[0])
+=======
+        lowList.append(i[0])  
+>>>>>>> ae8b8ce0215ad37cb4fb48ce9ec4e4c58a66fae5
 
     highList=sorted(highList,key=itemgetter(4))
     lowList=sorted(lowList,key=itemgetter(4))
@@ -300,7 +324,11 @@ def Get_Colleges():
 
     for i in list1:
       #list1=list(list1)
+<<<<<<< HEAD
       i.append('high')
+=======
+      i.append('high')  
+>>>>>>> ae8b8ce0215ad37cb4fb48ce9ec4e4c58a66fae5
     list2=[]
     for i in lowList:
       list2.append(list(i))
@@ -308,10 +336,17 @@ def Get_Colleges():
     for i in list2:
       i.append('low')
 
+<<<<<<< HEAD
 
 
 
 
+=======
+        
+          
+
+      
+>>>>>>> ae8b8ce0215ad37cb4fb48ce9ec4e4c58a66fae5
 
 
   #  dict=list_to_dict(list)
@@ -372,8 +407,13 @@ def Get_Colleges2():
       lk=(GetDetails(i));
      # lk.append((float(lk[0][5])/userInput)*100)
       mainList.append(lk);
+<<<<<<< HEAD
 
 
+=======
+      
+          
+>>>>>>> ae8b8ce0215ad37cb4fb48ce9ec4e4c58a66fae5
 
     i=labels.index[labels['name'] == perfect].tolist()
     i=i[0]
@@ -446,13 +486,23 @@ class GetCollegesApi(Resource):
       if i[0][4]>mainPerfect[0][4]:
         highList.append(i[0])
       else:
+<<<<<<< HEAD
         lowList.append(i[0])
     highList=sorted(highList,key=itemgetter(4))
     lowList=sorted(lowList,key=itemgetter(4))
+=======
+        lowList.append(i[0])  
+    highList=sorted(highList,key=itemgetter(4))
+    lowList=sorted(lowList,key=itemgetter(4))
+    for i in highList:
+      
+    
+>>>>>>> ae8b8ce0215ad37cb4fb48ce9ec4e4c58a66fae5
     mainPerfect.append('perfect')
     mainPerfectDict=list_to_dict(mainPerfect)
     dicti={}
     dicti.update({'match':mainPerfectDict})
+<<<<<<< HEAD
 
     dicti['safety']=(highList)
     dicti['reach']=(lowList)
@@ -461,6 +511,16 @@ class GetCollegesApi(Resource):
     #dict.update({'perfect':df.iloc[i,0]})
     return (dicti)
     #return (json.dumps(mainPerfect))
+=======
+   
+    dicti['safety']=(highList)
+    dicti['reach']=(lowList)
+    
+    print(dicti)
+    #dict.update({'perfect':df.iloc[i,0]})
+    return (dicti)
+    #return (json.dumps(mainPerfect))  
+>>>>>>> ae8b8ce0215ad37cb4fb48ce9ec4e4c58a66fae5
 
 api.add_resource(GetCollegesApi,'/api')
 
