@@ -13,7 +13,7 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import load_model
 from operator import itemgetter
-from flask_restful import Resource,reqparse,Api 
+from flask_restful import Resource,reqparse,Api
 from sklearn.preprocessing import LabelEncoder
 from collections import defaultdict
 
@@ -52,7 +52,7 @@ def GetDetails(clg):
   data=cursor.fetchall()
   print(data)
   print(list(data))
-  return list(data)     
+  return list(data)
 def predict(X_train, y_train, x_test, k):
     # create list for distances and targets
       distances = []
@@ -231,14 +231,14 @@ def Get_Colleges():
     lang=int(float(lang))
 
     userInput=((gre*100/340)+gpa+lang)/3
-    
+
 
 
     df = pd.read_csv("gredatasetmain.csv")
     X=df.iloc[:,[1,2,3]]
     labels=df.iloc[:,[0]]
 
-    
+
     le_X=LabelEncoder()
     labels.values[:,0]=le_X.fit_transform(labels.values[:,0])
 
@@ -275,7 +275,7 @@ def Get_Colleges():
       print(lk)
       mainList.append(lk);
     #print("mainList"+mainList)
-        
+
 
     i=labels.index[labels['name'] == perfect].tolist()
     print(i)
@@ -289,7 +289,7 @@ def Get_Colleges():
       if i[0][4]>mainPerfect[0][4]:
         highList.append(i[0])
       else:
-        lowList.append(i[0])  
+        lowList.append(i[0])
 
     highList=sorted(highList,key=itemgetter(4))
     lowList=sorted(lowList,key=itemgetter(4))
@@ -300,7 +300,7 @@ def Get_Colleges():
 
     for i in list1:
       #list1=list(list1)
-      i.append('high')  
+      i.append('high')
     list2=[]
     for i in lowList:
       list2.append(list(i))
@@ -308,10 +308,10 @@ def Get_Colleges():
     for i in list2:
       i.append('low')
 
-        
-          
 
-      
+
+
+
 
 
   #  dict=list_to_dict(list)
@@ -372,8 +372,8 @@ def Get_Colleges2():
       lk=(GetDetails(i));
      # lk.append((float(lk[0][5])/userInput)*100)
       mainList.append(lk);
-      
-          
+
+
 
     i=labels.index[labels['name'] == perfect].tolist()
     i=i[0]
@@ -446,21 +446,21 @@ class GetCollegesApi(Resource):
       if i[0][4]>mainPerfect[0][4]:
         highList.append(i[0])
       else:
-        lowList.append(i[0])  
+        lowList.append(i[0])
     highList=sorted(highList,key=itemgetter(4))
     lowList=sorted(lowList,key=itemgetter(4))
     mainPerfect.append('perfect')
     mainPerfectDict=list_to_dict(mainPerfect)
     dicti={}
     dicti.update({'match':mainPerfectDict})
-   
+
     dicti['safety']=(highList)
     dicti['reach']=(lowList)
-    
+
     print(dicti)
     #dict.update({'perfect':df.iloc[i,0]})
     return (dicti)
-    #return (json.dumps(mainPerfect))  
+    #return (json.dumps(mainPerfect))
 
 api.add_resource(GetCollegesApi,'/api')
 
