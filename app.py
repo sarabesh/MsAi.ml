@@ -16,6 +16,11 @@ from operator import itemgetter
 from flask_restful import Resource,reqparse,Api
 from sklearn.preprocessing import LabelEncoder
 from collections import defaultdict
+import matplotlib.pyplot as plt 
+import os
+
+
+
 
 app=Flask(__name__,static_url_path="/static")
 app.secret_key='ironman'
@@ -35,6 +40,9 @@ def list_to_dict(li):
          dct[ctt]=item
          ctt=ctt+1
      return dct
+
+
+
 
 #method to get details of college from collegetable given college name
 def GetDetails(clg):
@@ -69,6 +77,25 @@ def predict(X_train, y_train, x_test, k):
       return list(set(targets))
 
 
+@app.route("/testmethod",methods=['GET'])
+def testmethod():
+  User = request.args.get('nm')
+  print(User)
+  return render_template("index1.html")
+
+
+@app.route("/testi")
+def index():
+    return redirect("http://localhost:1234")
+
+@app.route('/Question')
+def Question():
+  conn=mysql.connect()
+  cursor=conn.cursor()
+  check_stmt=("SELECT * FROM questions")
+  cursor.execute(cursor)
+  rep=cursor.fetchall()
+  return render_template("Questions.html",**locals())
 
 
 #method to perform nlp and grade the text
@@ -274,6 +301,17 @@ def Get_Colleges():
       list2.append(list(i))
     for i in list2:
       i.append('low')
+
+    
+    plt.scatter([i[1] for i in highList],[i[5] for i in highList])
+    plt.plot(mainPerfect[0][1],mainPerfect[0][5],'g*')
+
+    #plt.xlabel('Insulin')
+    #plt.ylabel('glucose')
+    os.remove('static/inputvscsv.png')
+    plt.savefig('static/inputvscsv.png')
+    
+    
     return render_template("answer.html",**locals())
 
 @app.route('/GetColleges2', methods=['POST'])
